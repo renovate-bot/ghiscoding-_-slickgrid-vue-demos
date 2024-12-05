@@ -5,7 +5,7 @@ import { routes } from './router';
 
 <template>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand ms-2" href="https://github.com/ghiscoding/slickgrid-universal">
+    <a class="navbar-brand ms-2" href="https://github.com/ghiscoding/slickgrid-universal/tree/master/frameworks/slickgrid-vue">
       <i class="mdi mdi-github"></i>
       <span class="ms-2">Slickgrid-Vue</span>
     </a>
