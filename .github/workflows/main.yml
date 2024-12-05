@@ -39,7 +39,7 @@ jobs:
 
       - name: Prod Build for GitHub demo website
         run: |
-          npm build
+          npm run build
 
       - name: Deploy to gh-pages
         if: github.ref == 'refs/heads/main'
