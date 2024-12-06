@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { faker } from '@faker-js/faker';
 import sparkline from '@fnando/sparkline';
-import type { Formatter, GridOption, SlickgridVueInstance } from 'slickgrid-vue';
 import {
+  type Formatter,
+  type GridOption,
+  type SlickgridVueInstance,
   Aggregators,
   type Column,
   createDomElement,
@@ -442,12 +444,17 @@ function vueGridReady(grid: SlickgridVueInstance) {
       <a
         style="font-size: 18px"
         target="_blank"
-        href="https://github.com/ghiscoding/slickgrid-universal/blob/master/demos/vue/src/components/example34.vue"
+        href="https://github.com/ghiscoding/slickgrid-universal/blob/master/demos/vue/src/components/Example34.vue"
       >
         <span class="mdi mdi-link-variant"></span> code
       </a>
     </span>
-    <button class="ms-2 btn btn-outline-secondary btn-sm btn-icon" type="button" data-test="toggle-subtitle" @click="toggleSubTitle()">
+    <button
+      class="ms-2 btn btn-outline-secondary btn-sm btn-icon"
+      type="button"
+      data-test="toggle-subtitle"
+      @click="toggleSubTitle()"
+    >
       <span class="mdi mdi-information-outline" title="Toggle example sub-title details"></span>
     </button>
   </h2>
@@ -460,8 +467,8 @@ function vueGridReady(grid: SlickgridVueInstance) {
       <li>optionally change the simulation changes refresh rate in ms (lower number means more changes).</li>
       <li>you can Group by 1 of these columns: Currency, Market or Type</li>
       <li>
-        to show SlickGrid HUGE PERF., do the following: (1) lower Changes Rate (2) increase both Changes per Cycle and (3) lower Highlight
-        Duration
+        to show SlickGrid HUGE PERF., do the following: (1) lower Changes Rate (2) increase both Changes per Cycle and (3) lower
+        Highlight Duration
       </li>
     </ul>
   </div>
@@ -471,9 +478,9 @@ function vueGridReady(grid: SlickgridVueInstance) {
       <div class="col-sm-12 d-flex align-items-center">
         <div class="range">
           <label for="refreshRateRange" class="form-label me-1">Changes Rate(ms)</label>
-          <input id="refreshRateRange" type="range" class="form-range" min="0" max="250" :value="refreshRate" />
+          <input id="refreshRateRange" type="range" class="form-range" min="0" max="250" v-model="refreshRate" />
           <span class="refresh-rate">
-            <input type="number" :value="refreshRate" />
+            <input type="number" v-model="refreshRate" />
           </span>
         </div>
         <span class="ms-3 me-1">
@@ -490,13 +497,13 @@ function vueGridReady(grid: SlickgridVueInstance) {
         </span>
         <span class="mx-1">
           <label for="change-per-cycle-input">Changes p/Cycle</label>
-          <input id="change-per-cycle-input" class="ms-1" type="number" :value="minChangePerCycle" :max="maxChangePerCycle" />
+          <input id="change-per-cycle-input" class="ms-1" type="number" v-model="minChangePerCycle" :max="maxChangePerCycle" />
           to
-          <input type="number" :value="maxChangePerCycle" :min="minChangePerCycle" />
+          <input type="number" v-model="maxChangePerCycle" :min="minChangePerCycle" />
         </span>
         <span class="ms-2">
           <label for="highlight-input">Highlight Duration(ms)</label>
-          <input id="highlight-input" class="ms-1" type="number" data-test="highlight-input" :value="highlightDuration" />
+          <input id="highlight-input" class="ms-1" type="number" data-test="highlight-input" v-model="highlightDuration" />
         </span>
         <div class="ms-auto">
           <button class="btn btn-outline-secondary btn-sm btn-icon" @click="toggleFullScreen()">

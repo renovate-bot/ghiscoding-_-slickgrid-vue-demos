@@ -1,6 +1,13 @@
 <script setup lang="ts">
-import type { GridOption, OnCellChangeEventArgs, SlickgridVueInstance } from 'slickgrid-vue';
-import { type Column, Editors, FieldType, SlickgridVue } from 'slickgrid-vue';
+import {
+  type GridOption,
+  type OnCellChangeEventArgs,
+  type SlickgridVueInstance,
+  type Column,
+  Editors,
+  FieldType,
+  SlickgridVue,
+} from 'slickgrid-vue';
 import { onBeforeMount, onMounted, onUnmounted, ref } from 'vue';
 
 const NB_ITEMS = 100;
@@ -118,12 +125,17 @@ function vueGridReady(grid: SlickgridVueInstance) {
       <a
         style="font-size: 18px"
         target="_blank"
-        href="https://github.com/ghiscoding/slickgrid-universal/blob/master/demos/vue/src/components/example37.vue"
+        href="https://github.com/ghiscoding/slickgrid-universal/blob/master/demos/vue/src/components/Example37.vue"
       >
         <span class="mdi mdi-link-variant"></span> code
       </a>
     </span>
-    <button class="ms-2 btn btn-outline-secondary btn-sm btn-icon" type="button" data-test="toggle-subtitle" @click="toggleSubTitle()">
+    <button
+      class="ms-2 btn btn-outline-secondary btn-sm btn-icon"
+      type="button"
+      data-test="toggle-subtitle"
+      @click="toggleSubTitle()"
+    >
       <span class="mdi mdi-information-outline" title="Toggle example sub-title details"></span>
     </button>
   </h2>
