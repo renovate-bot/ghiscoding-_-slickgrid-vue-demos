@@ -25,7 +25,7 @@ import SAMPLE_COLLECTION_DATA from './data/collection_100_numbers.json';
 import SAMPLE_COLLECTION_DATA_URL from './data/collection_100_numbers.json?url';
 import COUNTRIES_COLLECTION from './data/countries.json';
 import COUNTRY_NAMES from './data/country_names.json';
-import fetchJsonp from './jsonp';
+import fetchJsonp from './jsonp.js';
 
 const NB_ITEMS = 100;
 
@@ -289,8 +289,8 @@ function defineGrid() {
           minLength: 3,
           forceUserInput: true,
           fetch: (searchText: string, updateCallback: (items: false | any[]) => void) => {
-            /** with JSONP will work locally but not on the GitHub demo because of CORS */
-            fetchJsonp<string[]>(`http://gd.geobytes.com/AutoCompleteCity?q=${searchText}`, { crossorigin: true })
+            /** with JSONP it will work locally but not on the GitHub demo because of CORS */
+            fetchJsonp<string[]>(`http://gd.geobytes.com/AutoCompleteCity?q=${searchText}`)
               .then((response) => response.json())
               .then((json) => updateCallback(json))
               .catch((ex) => console.log('invalid JSONP response', ex));
@@ -309,8 +309,8 @@ function defineGrid() {
         filterOptions: {
           minLength: 3,
           fetch: (searchText: string, updateCallback: (items: false | any[]) => void) => {
-            /** with JSONP AJAX will work locally but not on the GitHub demo because of CORS */
-            fetchJsonp<string[]>(`http://gd.geobytes.com/AutoCompleteCity?q=${searchText}`, { crossorigin: true })
+            /** with JSONP will work locally but not on the GitHub demo because of CORS */
+            fetchJsonp(`http://gd.geobytes.com/AutoCompleteCity?q=${searchText}`)
               .then((response) => response.json())
               .then((json) => updateCallback(json))
               .catch((ex) => console.log('invalid JSONP response', ex));
@@ -586,9 +586,7 @@ function dynamicallyAddTitleHeader() {
   };
 
   // you can dynamically add your column to your column definitions
-  // and then use the spread operator [...cols] OR slice to force Vue to review the changes
   columnDefinitions.value.push(newCol);
-  columnDefinitions.value = [...columnDefinitions.value];
 
   // NOTE if you use an Extensions (Checkbox Selector, Row Detail, ...) that modifies the column definitions in any way
   // you MUST use "getAllColumnDefinitions()" from the GridService, using this will be ALL columns including the 1st column that is created internally
@@ -596,19 +594,16 @@ function dynamicallyAddTitleHeader() {
   /*
     const allColumns = vueGrid.gridService.getAllColumnDefinitions();
     allColumns.push(newCol);
-    columnDefinitions = [...allColumns]; // (or use slice) reassign to column definitions for Vue to do dirty checking
     */
 }
 
 function dynamicallyRemoveLastColumn() {
   columnDefinitions.value.pop();
-  columnDefinitions.value = [...columnDefinitions.value];
 
   /*
     // remove your column the full set of columns
-    // and use slice or spread [...] to trigger an Vue dirty change
     allOriginalColumns.pop();
-    */
+  */
 }
 
 function setAutoEdit(autoEdit: boolean) {
