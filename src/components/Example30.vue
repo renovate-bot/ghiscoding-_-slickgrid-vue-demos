@@ -464,9 +464,7 @@ function defineGrid() {
       const prevSerializedValues = Array.isArray(editCommand.prevSerializedValue)
         ? editCommand.prevSerializedValue
         : [editCommand.prevSerializedValue];
-      const serializedValues = Array.isArray(editCommand.serializedValue)
-        ? editCommand.serializedValue
-        : [editCommand.serializedValue];
+      const serializedValues = Array.isArray(editCommand.serializedValue) ? editCommand.serializedValue : [editCommand.serializedValue];
       const editorColumns = columnDefinitions.value.filter((col) => col.editor !== undefined);
 
       const modifiedColumns: Column[] = [];
@@ -870,7 +868,7 @@ function loadData(count: number) {
       start: new Date(randomYear, randomMonth, randomDay, randomDay, randomTime, randomTime, randomTime),
       finish: isCompleted || (i % 3 === 0 && randomFinish > new Date() && i > 3) ? (isCompleted ? new Date() : randomFinish) : '', // make sure the random date is earlier than today and it's index is bigger than 3
       cost: i % 33 === 0 ? null : Math.round(Math.random() * 10000) / 100,
-      completed: isCompleted || (i % 3 === 0 && randomFinish > new Date() && i > 3),
+      completed: (isCompleted && i > 5) || (i % 3 === 0 && randomFinish > new Date() && i > 3),
       product: { id: mockProducts()[randomItemId]?.id, itemName: mockProducts()[randomItemId]?.itemName },
       origin: i % 2 ? { code: 'CA', name: 'Canada' } : { code: 'US', name: 'United States' },
     };
@@ -1061,12 +1059,7 @@ function renderItemCallbackWith4Corners(item: any): string {
         <span class="mdi mdi-link-variant"></span> code
       </a>
     </span>
-    <button
-      class="ms-2 btn btn-outline-secondary btn-sm btn-icon"
-      type="button"
-      data-test="toggle-subtitle"
-      @click="toggleSubTitle()"
-    >
+    <button class="ms-2 btn btn-outline-secondary btn-sm btn-icon" type="button" data-test="toggle-subtitle" @click="toggleSubTitle()">
       <span class="mdi mdi-information-outline" title="Toggle example sub-title details"></span>
     </button>
     <button class="btn btn-outline-secondary btn-sm btn-icon ms-1" data-test="toggle-dark-mode" @click="toggleDarkMode()">
@@ -1077,8 +1070,8 @@ function renderItemCallbackWith4Corners(item: any): string {
 
   <div class="subtitle">
     Composite Editor allows you to Create, Clone, Edit, Mass Update & Mass Selection Changes inside a nice Modal Window.
-    <br />The modal is simply populated by looping through your column definition list and also uses a lot of the same logic as
-    inline editing (see
+    <br />The modal is simply populated by looping through your column definition list and also uses a lot of the same logic as inline
+    editing (see
     <a href="https://ghiscoding.gitbook.io/slickgrid-vue/grid-functionalities/composite-editor-modal" target="_blank"
       >Composite Editor - Wiki</a
     >.)
@@ -1086,23 +1079,13 @@ function renderItemCallbackWith4Corners(item: any): string {
 
   <div class="mb-2">
     <div class="btn-group btn-group-sm" role="group" aria-label="Basic Editing Commands">
-      <button
-        type="button"
-        class="btn btn-outline-secondary btn-icon"
-        data-test="toggle-readonly-btn"
-        @click="toggleGridEditReadonly()"
-      >
+      <button type="button" class="btn btn-outline-secondary btn-icon" data-test="toggle-readonly-btn" @click="toggleGridEditReadonly()">
         <i class="mdi mdi-table-edit"></i> Toggle Edit/Readonly Grid
       </button>
       <button type="button" class="btn btn-outline-secondary btn-icon" data-test="undo-last-edit-btn" @click="undoLastEdit()">
         <i class="mdi mdi-undo"></i> Undo Last Edit
       </button>
-      <button
-        type="button"
-        class="btn btn-outline-secondary btn-icon"
-        data-test="undo-open-editor-btn"
-        @click="undoLastEdit(true)"
-      >
+      <button type="button" class="btn btn-outline-secondary btn-icon" data-test="undo-open-editor-btn" @click="undoLastEdit(true)">
         <i class="mdi mdi-undo"></i> Undo Last Edit &amp; Open Editor
       </button>
       <button type="button" class="btn btn-outline-secondary btn-icon" data-test="undo-all-edits-btn" @click="undoAllEdits()">
@@ -1175,8 +1158,7 @@ function renderItemCallbackWith4Corners(item: any): string {
     @onCompositeEditorChange="handleOnCompositeEditorChange($event.detail.eventData, $event.detail.args)"
     @onItemDeleted="handleItemDeleted($event.detail)"
     @onGridStateChanged="handleOnGridStateChanged($event.detail)"
-    @onFilterChanged="handleReRenderUnsavedStyling()"
-    @onPaginationChanged="handleReRenderUnsavedStyling()"
+    @onRowsOrCountChanged="handleReRenderUnsavedStyling()"
     @onValidationError="handleValidationError($event.detail.eventData, $event.detail.args)"
     @onVueGridCreated="vueGridReady($event.detail)"
   >
