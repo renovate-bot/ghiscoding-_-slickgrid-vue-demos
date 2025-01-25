@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type GridOption, type SlickgridVueInstance, type Column, SlickgridVue } from 'slickgrid-vue';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, type Ref } from 'vue';
 
 const NB_ITEMS = 200;
 let columns1WithHighlightingById: any = {};
@@ -8,8 +8,8 @@ let columns2WithHighlightingById: any = {};
 
 const gridOptions1 = ref<GridOption>();
 const gridOptions2 = ref<GridOption>();
-const columnDefinitions1 = ref<Column[]>([]);
-const columnDefinitions2 = ref<Column[]>([]);
+const columnDefinitions1: Ref<Column[]> = ref([]);
+const columnDefinitions2: Ref<Column[]> = ref([]);
 const dataset1 = ref<any[]>([]);
 const dataset2 = ref<any[]>([]);
 const showSubTitle = ref(true);
@@ -277,7 +277,7 @@ function vueGrid2Ready(grid: SlickgridVueInstance) {
 
   <slickgrid-vue
     v-model:options="gridOptions1!"
-    v-model:columns="columnDefinitions1 as Column[]"
+    v-model:columns="columnDefinitions1"
     v-model:data="dataset1"
     grid-id="grid7-1"
     @onVueGridCreated="vueGrid1Ready($event.detail)"
@@ -290,7 +290,7 @@ function vueGrid2Ready(grid: SlickgridVueInstance) {
 
   <slickgrid-vue
     v-model:options="gridOptions2!"
-    v-model:columns="columnDefinitions2 as Column[]"
+    v-model:columns="columnDefinitions2"
     v-model:data="dataset2"
     grid-id="grid7-2"
     @onVueGridCreated="vueGrid2Ready($event.detail)"

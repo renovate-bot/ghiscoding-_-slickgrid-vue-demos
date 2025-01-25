@@ -19,7 +19,7 @@ import {
   OperatorType,
   SlickgridVue,
 } from 'slickgrid-vue';
-import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
+import { onBeforeMount, onBeforeUnmount, ref, type Ref } from 'vue';
 
 import { CustomInputFilter } from './custom-inputFilter';
 
@@ -27,7 +27,7 @@ const { i18next } = useTranslation();
 
 const NB_ITEMS = 1500;
 const gridOptions = ref<GridOption>();
-const columnDefinitions = ref<Column[]>([]);
+const columnDefinitions: Ref<Column[]> = ref([]);
 const dataset = ref<any[]>([]);
 const selectedLanguage = ref('en');
 const metrics = ref<Metrics>();
@@ -406,7 +406,7 @@ function vueGridReady(grid: SlickgridVueInstance) {
 
   <slickgrid-vue
     v-model:options="gridOptions"
-    v-model:columns="columnDefinitions as Column[]"
+    v-model:columns="columnDefinitions"
     v-model:data="dataset"
     grid-id="grid23"
     @onVueGridCreated="vueGridReady($event.detail)"

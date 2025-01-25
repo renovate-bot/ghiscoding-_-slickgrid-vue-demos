@@ -9,13 +9,13 @@ import {
   Formatters,
   SlickgridVue,
 } from 'slickgrid-vue';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, type Ref } from 'vue';
 
 const isGrid2WithPagination = ref(true);
 const gridOptions1 = ref<GridOption>();
 const gridOptions2 = ref<GridOption>();
-const columnDefinitions1 = ref<Column[]>([]);
-const columnDefinitions2 = ref<Column[]>([]);
+const columnDefinitions1: Ref<Column[]> = ref([]);
+const columnDefinitions2: Ref<Column[]> = ref([]);
 const dataset1 = ref<any[]>([]);
 const dataset2 = ref<any[]>([]);
 const showSubTitle = ref(true);
@@ -376,7 +376,7 @@ function vueGrid2Ready(grid: SlickgridVueInstance) {
 
   <slickgrid-vue
     v-model:options="gridOptions1!"
-    v-model:columns="columnDefinitions1 as Column[]"
+    v-model:columns="columnDefinitions1"
     v-model:data="dataset1"
     grid-id="grid1"
     @onGridStateChanged="grid1StateChanged($event.detail)"
@@ -421,7 +421,7 @@ function vueGrid2Ready(grid: SlickgridVueInstance) {
 
   <slickgrid-vue
     v-model:options="gridOptions2!"
-    v-model:columns="columnDefinitions2 as Column[]"
+    v-model:columns="columnDefinitions2"
     v-model:data="dataset2"
     grid-id="grid2"
     @onGridStateChanged="grid2StateChanged($event.detail)"

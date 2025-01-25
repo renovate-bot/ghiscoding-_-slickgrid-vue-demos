@@ -15,11 +15,11 @@ import {
   GroupTotalFormatters,
   SlickgridVue,
 } from 'slickgrid-vue';
-import { onBeforeMount, onMounted, onUnmounted, ref } from 'vue';
+import { onBeforeMount, onMounted, onUnmounted, ref, type Ref } from 'vue';
 
 const NB_ITEMS = 200;
 const gridOptions = ref<GridOption>();
-const columnDefinitions = ref<Column[]>([]);
+const columnDefinitions: Ref<Column[]> = ref([]);
 const dataset = ref<any[]>([]);
 const isDarkMode = ref(false);
 const isFullScreen = ref(false);
@@ -270,7 +270,9 @@ function defineGrid() {
     },
     draggableGrouping: {
       dropPlaceHolderText: 'Drop a column header here to group by any of these available columns: Currency, Market or Type',
-      deleteIconCssClass: 'mdi mdi-close',
+      deleteIconCssClass: 'mdi mdi-close text-color-danger',
+      sortAscIconCssClass: 'mdi mdi-arrow-up',
+      sortDescIconCssClass: 'mdi mdi-arrow-down',
     },
     enableDraggableGrouping: true,
     createPreHeaderPanel: true,
@@ -511,7 +513,7 @@ function vueGridReady(grid: SlickgridVueInstance) {
 
     <slickgrid-vue
       v-model:options="gridOptions"
-      v-model:columns="columnDefinitions as Column[]"
+      v-model:columns="columnDefinitions"
       v-model:data="dataset"
       grid-id="grid34"
       @onVueGridCreated="vueGridReady($event.detail)"

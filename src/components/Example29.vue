@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { type GridOption, type SlickgridVueInstance, type Column, Formatters, SlickgridVue } from 'slickgrid-vue';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, type Ref } from 'vue';
 
 import CustomFooter from './CustomFooterComponent.vue';
 
 const NB_ITEMS = 995;
 const gridOptions = ref<GridOption>();
-const columnDefinitions = ref<Column[]>([]);
+const columnDefinitions: Ref<Column[]> = ref([]);
 const dataset = ref<any[]>([]);
 const showSubTitle = ref(true);
 let vueGrid!: SlickgridVueInstance;
@@ -87,7 +87,7 @@ function toggleSubTitle() {
 
   <hr />
 
-  <slickgrid-vue v-model:options="gridOptions" v-model:columns="columnDefinitions as Column[]" v-model:data="dataset" grid-id="grid2">
+  <slickgrid-vue v-model:options="gridOptions" v-model:columns="columnDefinitions" v-model:data="dataset" grid-id="grid2">
     <template #header>
       <div class="custom-header-slot">
         <h3>Grid with header and footer slot</h3>

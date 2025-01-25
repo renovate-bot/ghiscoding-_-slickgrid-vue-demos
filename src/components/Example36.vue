@@ -18,7 +18,7 @@ import {
   GroupTotalFormatters,
   SlickgridVue,
 } from 'slickgrid-vue';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, type Ref } from 'vue';
 
 interface GroceryItem {
   id: number;
@@ -32,7 +32,7 @@ interface GroceryItem {
 }
 
 const gridOptions = ref<GridOption>();
-const columnDefinitions = ref<Column[]>([]);
+const columnDefinitions: Ref<Column[]> = ref([]);
 const dataset = ref<any[]>([]);
 const excelExportService = new ExcelExportService();
 const isDataGrouped = ref(false);
@@ -575,7 +575,7 @@ function vueGridReady(grid: SlickgridVueInstance) {
 
   <slickgrid-vue
     v-model:options="gridOptions"
-    v-model:columns="columnDefinitions as Column[]"
+    v-model:columns="columnDefinitions"
     v-model:data="dataset"
     grid-id="grid36"
     @onCellChange="invalidateAll()"

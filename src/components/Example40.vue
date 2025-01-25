@@ -15,11 +15,11 @@ import {
   SortComparers,
   SortDirectionNumber,
 } from 'slickgrid-vue';
-import { computed, onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref, type Ref } from 'vue';
 
 const FETCH_SIZE = 50;
 const gridOptions = ref<GridOption>();
-const columnDefinitions = ref<Column[]>([]);
+const columnDefinitions: Ref<Column[]> = ref([]);
 const dataset = ref<any[]>([]);
 const metrics = ref<Partial<Metrics>>({});
 const shouldResetOnSort = ref(false);
@@ -275,7 +275,7 @@ function vueGridReady(grid: SlickgridVueInstance) {
 
   <slickgrid-vue
     v-model:options="gridOptions"
-    v-model:columns="columnDefinitions as Column[]"
+    v-model:columns="columnDefinitions"
     v-model:data="dataset"
     grid-id="grid40"
     @onRowCountChanged="refreshMetrics($event.detail.args)"

@@ -16,10 +16,10 @@ import {
   isNumber,
   SlickgridVue,
 } from 'slickgrid-vue';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, type Ref } from 'vue';
 
 const gridOptions = ref<GridOption>();
-const columnDefinitions = ref<Column[]>([]);
+const columnDefinitions: Ref<Column[]> = ref([]);
 const datasetHierarchical = ref<any[]>([]);
 const isExcludingChildWhenFiltering = ref(false);
 const isAutoApproveParentItemWhenTreeColumnIsValid = ref(true);
@@ -154,6 +154,7 @@ function defineGrid() {
 
   gridOptions.value = {
     autoResize: {
+      autoHeight: false,
       container: '#demo-container',
       rightPadding: 10,
     },
@@ -581,7 +582,7 @@ function vueGridReady(grid: SlickgridVueInstance) {
   <div id="grid-container" class="col-sm-12">
     <slickgrid-vue
       v-model:options="gridOptions"
-      v-model:columns="columnDefinitions as Column[]"
+      v-model:columns="columnDefinitions"
       v-model:hierarchical="datasetHierarchical"
       grid-id="grid28"
       @onVueGridCreated="vueGridReady($event.detail)"

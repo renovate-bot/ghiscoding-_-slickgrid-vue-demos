@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ExcelExportService } from '@slickgrid-universal/excel-export';
 import { type Column, Editors, type GridOption, type ItemMetadata, SlickgridVue, type SlickgridVueInstance } from 'slickgrid-vue';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, type Ref } from 'vue';
 
 const isEditable = ref(false);
+const excelExportService = new ExcelExportService();
 const gridOptions = ref<GridOption>();
-const columnDefinitions = ref<Column[]>([]);
+const columnDefinitions: Ref<Column[]> = ref([]);
 const dataset = ref<any[]>([]);
 const showSubTitle = ref(true);
 let vueGrid!: SlickgridVueInstance;
@@ -142,7 +143,7 @@ function defineGrid() {
     enableColumnReorder: true,
     enableCellRowSpan: true,
     enableExcelExport: true,
-    externalResources: [new ExcelExportService()],
+    externalResources: [excelExportService],
     enableExcelCopyBuffer: true,
     autoEdit: true,
     editable: false,
@@ -159,6 +160,10 @@ function defineGrid() {
     },
     rowTopOffsetRenderType: 'top', // rowspan doesn't render well with 'transform', default is 'top'
   };
+}
+
+function exportToExcel() {
+  excelExportService.exportToExcel({ filename: 'export', format: 'xlsx' });
 }
 
 function navigateDown() {
@@ -481,10 +486,13 @@ function vueGridReady(grid: SlickgridVueInstance) {
       >Toggle Editing: <span id="isEditable" class="text-italic">{{ isEditable }}</span></span
     >
   </button>
+  <button class="btn btn-outline-secondary btn-sm btn-icon mx-1" data-test="export-excel-btn" @click="exportToExcel()">
+    <i class="mdi mdi-file-excel-outline text-success"></i> Export to Excel
+  </button>
 
   <slickgrid-vue
     v-model:options="gridOptions"
-    v-model:columns="columnDefinitions as Column[]"
+    v-model:columns="columnDefinitions"
     v-model:data="dataset"
     grid-id="grid43"
     @onVueGridCreated="vueGridReady($event.detail)"

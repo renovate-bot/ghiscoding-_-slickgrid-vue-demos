@@ -12,13 +12,13 @@ import {
   type SlickgridVueInstance,
   type SliderRangeOption,
 } from 'slickgrid-vue';
-import { DefineComponent, onBeforeMount, ref } from 'vue';
+import { DefineComponent, onBeforeMount, ref, type Ref } from 'vue';
 
 import CustomPagerComponent from './CustomPagerComponent.vue';
 
 const NB_ITEMS = 5000;
 const gridOptions = ref<GridOption>();
-const columnDefinitions = ref<Column[]>([]);
+const columnDefinitions: Ref<Column[]> = ref([]);
 const dataset = ref<any[]>([]);
 const showSubTitle = ref(true);
 const pageSize = ref(50);
@@ -236,7 +236,7 @@ function vueGridReady(grid: SlickgridVueInstance) {
 
   <slickgrid-vue
     v-model:options="gridOptions"
-    v-model:columns="columnDefinitions as Column[]"
+    v-model:columns="columnDefinitions"
     v-model:data="dataset"
     grid-id="grid42"
     @onVueGridCreated="vueGridReady($event.detail)"

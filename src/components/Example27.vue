@@ -11,11 +11,11 @@ import {
   Formatters,
   SlickgridVue,
 } from 'slickgrid-vue';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, type Ref } from 'vue';
 
 const NB_ITEMS = 500;
 const gridOptions = ref<GridOption>();
-const columnDefinitions = ref<Column[]>([]);
+const columnDefinitions: Ref<Column[]> = ref([]);
 const dataset = ref<any[]>([]);
 const loadingClass = ref('');
 const isLargeDataset = ref(false);
@@ -494,7 +494,7 @@ function vueGridReady(grid: SlickgridVueInstance) {
   <div id="grid-container" class="col-sm-12">
     <slickgrid-vue
       v-model:options="gridOptions"
-      v-model:columns="columnDefinitions as Column[]"
+      v-model:columns="columnDefinitions"
       v-model:data="dataset"
       grid-id="grid27"
       @onBeforeFilterChange="showSpinner()"
