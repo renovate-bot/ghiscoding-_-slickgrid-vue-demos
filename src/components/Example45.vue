@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { faker } from '@faker-js/faker';
-import { type GridOption, type SlickgridVueInstance, type Column, ExtensionName, SlickgridVue } from 'slickgrid-vue';
+import { type Column, ExtensionName, type GridOption, SlickRowDetailView, SlickgridVue, type SlickgridVueInstance } from 'slickgrid-vue';
 import { computed, onBeforeMount, onUnmounted, ref, type Ref } from 'vue';
 
 import Example45Detail, { OrderData, type Distributor } from './Example45Detail.vue';
@@ -13,12 +13,15 @@ const detailViewRowCount = ref(9);
 const columnDefinitions: Ref<Column[]> = ref([]);
 const dataset = ref<Distributor[]>([]);
 const isDarkMode = ref(false);
+const isUsingAutoHeight = ref(false);
 const isUsingInnerGridStatePresets = ref(false);
 const showSubTitle = ref(true);
 const serverWaitDelay = ref(FAKE_SERVER_DELAY); // server simulation with default of 250ms but 50ms for Cypress tests
 let vueGrid!: SlickgridVueInstance;
 
-const rowDetailInstance = computed(() => vueGrid?.extensionService.getExtensionInstanceByName(ExtensionName.rowDetailView));
+const rowDetailInstance = computed(
+  () => vueGrid?.extensionService.getExtensionInstanceByName(ExtensionName.rowDetailView) as SlickRowDetailView
+);
 
 onBeforeMount(() => {
   defineGrid();
@@ -87,9 +90,9 @@ function defineGrid() {
   gridOptions.value = {
     autoResize: {
       container: '#demo-container',
+      autoHeight: isUsingAutoHeight.value, // works with/without autoHeight
       bottomPadding: 20,
     },
-    autoHeight: false,
     enableFiltering: true,
     enableRowDetailView: true,
     rowHeight: 33,
@@ -131,10 +134,17 @@ function getData(count: number) {
 
 function changeDetailViewRowCount() {
   const options = rowDetailInstance.value.getOptions();
-  if (options && options.panelRows) {
+  if (options?.panelRows) {
     options.panelRows = detailViewRowCount.value; // change number of rows dynamically
     rowDetailInstance.value.setOptions(options);
   }
+}
+
+function changeUsingResizerAutoHeight() {
+  isUsingAutoHeight.value = !isUsingAutoHeight.value;
+  vueGrid.slickGrid?.setOptions({ autoResize: { ...gridOptions.value!.autoResize, autoHeight: isUsingAutoHeight.value } });
+  vueGrid.resizerService.resizeGrid();
+  return true;
 }
 
 function changeUsingInnerGridStatePresets() {
@@ -145,6 +155,10 @@ function changeUsingInnerGridStatePresets() {
 
 function closeAllRowDetail() {
   rowDetailInstance.value.collapseAll();
+}
+
+function redrawAllRowDetail() {
+  rowDetailInstance.value.redrawAllViewComponents();
 }
 
 /** Just for demo purposes, we will simulate an async server call and return more details on the selected row item */
@@ -211,8 +225,6 @@ function toggleBodyBackground() {
 
 function toggleSubTitle() {
   showSubTitle.value = !showSubTitle.value;
-  const action = showSubTitle.value ? 'remove' : 'add';
-  document.querySelector('.subtitle')?.classList[action]('hidden');
   queueMicrotask(() => vueGrid.resizerService.resizeGrid());
 }
 
@@ -246,7 +258,7 @@ function vueGridReady(grid: SlickgridVueInstance) {
       </button>
     </h2>
 
-    <div class="subtitle">
+    <div class="subtitle" v-show="showSubTitle">
       Add functionality to show extra information with a Row Detail View, (<a
         href="https://ghiscoding.gitbook.io/slickgrid-vue/grid-functionalities/row-detail"
         target="_blank"
@@ -262,7 +274,10 @@ function vueGridReady(grid: SlickgridVueInstance) {
         <button class="btn btn-outline-secondary btn-sm btn-icon ms-1" data-test="collapse-all-btn" @click="closeAllRowDetail()">
           Close all Row Details
         </button>
-        &nbsp;&nbsp;
+
+        <button class="btn btn-outline-secondary btn-sm btn-icon mx-1" data-test="redraw-all-btn" @click="redrawAllRowDetail()">
+          Force redraw all Row Details
+        </button>
 
         <span class="d-inline-flex gap-4px">
           <label for="detailViewRowCount">Detail View Rows Shown: </label>
@@ -303,6 +318,17 @@ function vueGridReady(grid: SlickgridVueInstance) {
             >
               Use Inner Grid State/Presets
             </span>
+          </label>
+
+          <label class="checkbox-inline control-label ms-2" for="useResizeAutoHeight">
+            <input
+              type="checkbox"
+              id="useResizeAutoHeight"
+              data-test="use-auto-height"
+              :checked="isUsingAutoHeight"
+              @click="changeUsingResizerAutoHeight()"
+            />
+            Use <code>autoResize.autoHeight</code>
           </label>
         </span>
       </div>

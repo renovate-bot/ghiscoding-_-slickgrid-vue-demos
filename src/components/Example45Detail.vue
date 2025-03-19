@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type Column, type GridOption, GridState, type RowDetailViewProps, SlickgridVue, SlickgridVueInstance } from 'slickgrid-vue';
-import { onBeforeMount, onMounted, ref, type Ref } from 'vue';
+import { onBeforeMount, onBeforeUnmount, onMounted, ref, type Ref } from 'vue';
 
 import Example45 from './Example45.vue';
 
@@ -34,6 +34,10 @@ let vueGrid!: SlickgridVueInstance;
 
 onBeforeMount(() => {
   defineGrid();
+});
+
+onBeforeUnmount(() => {
+  // console.log('unmounting row detail', props.model.id);
 });
 
 onMounted(() => {
@@ -94,6 +98,7 @@ function vueGridReady(grid: SlickgridVueInstance) {
         v-model:columns="innerColDefs"
         v-model:data="innerDataset"
         :grid-id="`innergrid-${model.id}`"
+        class="innergrid"
         @onBeforeGridDestroy="handleBeforeGridDestroy"
         @onVueGridCreated="vueGridReady($event.detail)"
       >
@@ -111,5 +116,8 @@ function vueGridReady(grid: SlickgridVueInstance) {
 
 label {
   font-weight: 600;
+}
+.innergrid {
+  --slick-header-menu-display: inline-block;
 }
 </style>
