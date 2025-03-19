@@ -538,7 +538,6 @@ function vueGridReady(grid: SlickgridVueInstance) {
       </li>
       <li>This example also has auto-resize enabled, and we also demo how you can pause the resizer if you wish to</li>
     </ul>
-    <br/>
     Grid with Excel Formulas (<a
       href="https://ghiscoding.gitbook.io/slickgrid-vue/grid-functionalities/export-to-excel#cell-value-parser"
       target="_blank"
