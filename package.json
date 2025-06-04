@@ -6,6 +6,22 @@
   "author": {
     "name": "Ghislain B."
   },
+  "keywords": [
+    "react",
+    "datagrid",
+    "datatable",
+    "plugin",
+    "slickgrid"
+  ],
+  "homepage": "https://github.com/ghiscoding/slickgrid-universal/tree/master/frameworks/slickgrid-vue",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghiscoding/slickgrid-universal.git",
+    "directory": "frameworks/slickgrid-vue"
+  },
+  "bugs": {
+    "url": "https://github.com/ghiscoding/slickgrid-universal/issues"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
