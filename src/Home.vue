@@ -13,14 +13,15 @@
     (it can even handle a million rows).
   </p>
   <h4>Documentation</h4>
-  <p>
-    <h3>Documentation</h3>
-    Most of the info, news and documentation links are mostly available in the <a href="https://github.com/ghiscoding/slickgrid-universal">Slickgrid-Universal</a> project. Please consult the
-    <a href="https://ghiscoding.gitbook.io/slickgrid-vue" target="_blank">Slickgrid-Vue - Docs</a>
-    before opening any new issues. The
-    <a href="https://ghiscoding.gitbook.io/slickgrid-vue/getting-started/quick-start" target="_blank">Docs - Getting Started</a>
-    is a great place to start with.
-  </p>
+  
+  <br />
+
+  <h3>Documentation</h3>
+  Most of the info, news and documentation links are mostly available in the <a href="https://github.com/ghiscoding/slickgrid-universal">Slickgrid-Universal</a> project. Please consult the
+  <a href="https://ghiscoding.gitbook.io/slickgrid-vue" target="_blank">Slickgrid-Vue - Docs</a>
+  before opening any new issues. The
+  <a href="https://ghiscoding.gitbook.io/slickgrid-vue/getting-started/quick-start" target="_blank">Docs - Getting Started</a>
+  is a great place to start with.
 
   <hr />
   Like my work? You can support me with caffeine :)
