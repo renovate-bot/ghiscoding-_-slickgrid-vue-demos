@@ -48,7 +48,7 @@
     "i18next-http-backend": "^3.0.2",
     "i18next-vue": "^5.3.0",
     "rxjs": "^7.8.2",
-    "slickgrid-vue": "^9.6.0",
+    "slickgrid-vue": "^9.6.1",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"
   },
