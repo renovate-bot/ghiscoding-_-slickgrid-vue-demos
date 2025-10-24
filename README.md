@@ -1,4 +1,4 @@
-# [Slickgrid-Vue](https://github.com/ghiscoding/slickgrid-universal/tree/master/frameworks/slickgrid-vue) - Bootstrap 5 Demo with i18n
+# [![Vue](https://avatars.githubusercontent.com/u/6128107?s=70&v=4)](https://vuejs.org/) [Slickgrid-Vue](https://github.com/ghiscoding/slickgrid-universal/tree/master/frameworks/slickgrid-vue) - Bootstrap 5 Demo with i18n
 
 ## Important Note
 Please note that some of the npm packages that are installed in these demos are **optional** and are installed **only** for demo purposes. If you don't need any of the feature desribe below, then don't install it (remove it from your `package.json`) and you'll end up with a much smaller production build.
