@@ -2,19 +2,18 @@
 import { format as dateFormatter } from '@formkit/tempo';
 import { GridOdataService, type OdataServiceApi } from '@slickgrid-universal/odata';
 import {
+  Aggregators,
+  Filters,
+  SlickgridVue,
+  SortComparers,
+  type Column,
   type GridOption,
   type Grouping,
   type Metrics,
   type OnRowCountChangedEventArgs,
   type SlickgridVueInstance,
-  Aggregators,
-  type Column,
-  Filters,
-  SlickgridVue,
-  SortComparers,
 } from 'slickgrid-vue';
 import { computed, onBeforeMount, ref, type Ref } from 'vue';
-
 import Data from './data/customers_100.json';
 
 const CARET_HTML_ESCAPED = '%5E';
@@ -369,7 +368,7 @@ function getCustomerDataApiMock(query: string): Promise<any> {
     }
     const updatedData = filteredData.slice(firstRow, firstRow + top!);
 
-    window.setTimeout(() => {
+    setTimeout(() => {
       const backendResult: any = { query };
       backendResult['value'] = updatedData;
       backendResult['@odata.count'] = countTotalItems;
@@ -508,7 +507,7 @@ function vueGridReady(grid: SlickgridVueInstance) {
         <button class="btn btn-outline-secondary btn-sm mx-1" data-test="set-dynamic-filter" @click="setFiltersDynamically()">
           Set Filters Dynamically
         </button>
-        <button class="btn btn-outline-secondary btn-sm" data-test="set-dynamic-sorting" @click="setSortingDynamically()">
+        <button class="btn btn-outline-secondary btn-sm btn-icon" data-test="set-dynamic-sorting" @click="setSortingDynamically()">
           Set Sorting Dynamically
         </button>
         <button class="btn btn-outline-secondary btn-sm mx-1" data-test="group-by-gender" @click="groupByGender()">Group by Gender</button>

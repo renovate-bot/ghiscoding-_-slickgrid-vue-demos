@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import {
-  type Column,
   Formatters,
+  SlickgridVue,
+  type Column,
   type GridOption,
   type PaginationChangedArgs,
-  SlickgridVue,
   type SlickgridVueInstance,
 } from 'slickgrid-vue';
 import { onBeforeMount, onUnmounted, ref, type Ref } from 'vue';
-
 import { zeroPadding } from './utilities';
 
 const NB_ITEMS = 995;
@@ -26,7 +25,6 @@ const dataset2 = ref<any[]>([]);
 onBeforeMount(() => {
   defineGrids();
   // mock some data (different in each dataset)
-  dataset1.value = mockData(NB_ITEMS);
   dataset1.value = mockData(NB_ITEMS);
   dataset2.value = mockData(NB_ITEMS);
 });
