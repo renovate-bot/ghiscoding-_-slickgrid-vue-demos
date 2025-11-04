@@ -25,9 +25,11 @@ function vueGrid1Ready(vueGrid: SlickgridVueInstance) {
   const cellSelectionModel1 = vueGrid.slickGrid!.getSelectionModel()!;
   _eventHandler.subscribe(cellSelectionModel1.onSelectedRangesChanged, (_e, args) => {
     const targetRange = document.querySelector('#selectionRange1') as HTMLSpanElement;
-    targetRange.textContent = '';
-    for (const slickRange of args) {
-      targetRange.textContent += JSON.stringify(slickRange);
+    if (targetRange) {
+      targetRange.textContent = '';
+      for (const slickRange of args) {
+        targetRange.textContent += JSON.stringify(slickRange);
+      }
     }
   });
 }
@@ -36,9 +38,11 @@ function vueGrid2Ready(vueGrid: SlickgridVueInstance) {
   const cellSelectionModel2 = vueGrid.slickGrid!.getSelectionModel()!;
   _eventHandler.subscribe(cellSelectionModel2.onSelectedRangesChanged, (_e, args) => {
     const targetRange = document.querySelector('#selectionRange1') as HTMLSpanElement;
-    targetRange.textContent = '';
-    for (const slickRange of args) {
-      targetRange.textContent += JSON.stringify(slickRange);
+    if (targetRange) {
+      targetRange.textContent = '';
+      for (const slickRange of args) {
+        targetRange.textContent += JSON.stringify(slickRange);
+      }
     }
   });
 }
