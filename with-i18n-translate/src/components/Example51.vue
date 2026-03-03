@@ -129,6 +129,11 @@ function defineGrid() {
             },
             { divider: true, command: '', positionOrder: 52 },
             {
+              command: 'clear-filter',
+              iconCssClass: 'mdi mdi-filter-remove-outline',
+              title: 'Remove Filter',
+            },
+            {
               command: 'clear-sort',
               title: 'Remove Sort',
               positionOrder: 58,
@@ -140,6 +145,44 @@ function defineGrid() {
                     <span class="round-tag"></span>
                   </div>
                 `,
+            },
+
+            {
+              command: 'hide-column',
+              iconCssClass: 'mdi mdi-close',
+              title: 'Hide Column',
+            },
+            'divider',
+            {
+              command: 'footer-buttons',
+              title: 'Footer Buttons',
+              cssClass: 'slot-menu-container', // add a class to the menu container for styling purposes
+              slotRenderer: () => {
+                // create a container with 2 buttons to show what is possible
+                const container = createDomElement('div', { className: 'footer-buttons-container' });
+                const editBtn = createDomElement('button', {
+                  className: 'footer-btn who-btn btn btn-outline-secondary btn-sm',
+                  textContent: 'Who am I?',
+                });
+                const deleteBtn = createDomElement('button', {
+                  className: 'footer-btn update-btn btn btn-outline-secondary btn-sm',
+                  textContent: 'Request Update',
+                });
+
+                // add event listeners to buttons (see Context Menu)
+                // OR use the `action` callback (see below) with `event.target` to delegate events instead of adding individual listeners
+                container.appendChild(editBtn);
+                container.appendChild(deleteBtn);
+                return container;
+              },
+              action: (e, args) => {
+                if (e.target.classList.contains('who-btn')) {
+                  alert(`I am the "${args.column.name}" column`);
+                } else if (e.target.classList.contains('update-btn')) {
+                  alert(`is it done yet?`);
+                }
+                e.preventDefault(); // prevent menu from closing if needed
+              },
             },
           ],
         },
@@ -266,8 +309,7 @@ function defineGrid() {
       minWidth: 70,
       maxWidth: 70,
       cssClass: 'justify-center flex',
-      formatter: () =>
-        `<div class="button-style margin-auto" style="width: 35px;"><span class="mdi mdi-chevron-down text-primary"></span></div>`,
+      formatter: () => `<div class="button-style action-btn"><span class="mdi mdi-chevron-down font-22px color-primary"></span></div>`,
       excludeFromExport: true,
       // Demo: Cell Menu with slot examples (demonstrating defaultMenuItemRenderer at menu level)
       cellMenu: {
@@ -468,6 +510,39 @@ function defineGrid() {
             iconCssClass: 'mdi mdi-delete text-danger',
             action: () => alert('Delete row'),
           },
+          'divider',
+          {
+            command: 'footer-buttons',
+            title: 'Footer Buttons',
+            cssClass: 'slot-menu-container', // add a class to the menu container for styling purposes
+            slotRenderer: (_cmd, args) => {
+              // create a container with 2 buttons to show what is possible
+              const container = createDomElement('div', { className: 'footer-buttons-container' });
+              const editBtn = createDomElement('button', {
+                className: 'footer-btn edit-btn btn btn-outline-secondary btn-sm',
+                textContent: 'Edit',
+              });
+              const deleteBtn = createDomElement('button', {
+                className: 'footer-btn delete-btn btn btn-outline-secondary btn-sm',
+                textContent: 'Delete',
+              });
+
+              // add event listeners to buttons
+              // OR use the `action` callback (see Header Menu) with `event.target` to delegate events instead of adding individual listeners
+              editBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // prevent menu from closing if needed
+                alert(`Edit action for row #${args.dataContext.id}`);
+              });
+              deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                alert(`Delete action for row #${args.dataContext.id}`);
+              });
+
+              container.appendChild(editBtn);
+              container.appendChild(deleteBtn);
+              return container;
+            },
+          },
         ] as Array<MenuCommandItem | 'divider'>;
       },
       // Demo: Menu-level default renderer for context menu items
@@ -610,68 +685,70 @@ function vueGridReady(grid: SlickgridVueInstance) {
 </script>
 
 <template>
-  <h2>
-    Example 51: Menus with Slots
-    <span class="float-end font18">
-      see&nbsp;
-      <a target="_blank" href="https://github.com/ghiscoding/slickgrid-universal/blob/master/demos/vue/src/components/Example51.vue">
-        <span class="mdi mdi-link-variant"></span> code
-      </a>
-    </span>
-    <button class="ms-2 btn btn-outline-secondary btn-sm btn-icon" type="button" data-test="toggle-subtitle" @click="toggleSubTitle">
-      <span class="mdi mdi-information-outline" title="Toggle example sub-title details"></span>
-    </button>
-  </h2>
+  <div class="grid51-container">
+    <h2>
+      Example 51: Menus with Slots
+      <span class="float-end font18">
+        see&nbsp;
+        <a target="_blank" href="https://github.com/ghiscoding/slickgrid-universal/blob/master/demos/vue/src/components/Example51.vue">
+          <span class="mdi mdi-link-variant"></span> code
+        </a>
+      </span>
+      <button class="ms-2 btn btn-outline-secondary btn-sm btn-icon" type="button" data-test="toggle-subtitle" @click="toggleSubTitle">
+        <span class="mdi mdi-information-outline" title="Toggle example sub-title details"></span>
+      </button>
+    </h2>
 
-  <div class="subtitle alert alert-light">
-    <h5 class="mb-2">
-      <span class="mdi mdi-information-outline"></span>
-      <strong>Menu Slots Demo with Custom Renderer</strong>
-    </h5>
-    <p class="mb-2">
-      Click on the menu buttons to see the new <strong>single slot functionality</strong> working across all menu types (Header Menu, Cell
-      Menu, Context Menu, Grid Menu):
-    </p>
-    <p class="mt-2">
-      <small
-        ><strong>Note:</strong> The demo focuses on the custom rendering capability via <code>slotRenderer</code> and
-        <code>defaultMenuItemRenderer</code>, which work across all menu plugins (SlickHeaderMenu, SlickCellMenu, SlickContextMenu,
-        SlickGridMenu). Also note that the keyboard shortcuts displayed in the menus (e.g., <code>Alt+↑</code>, <code>F5</code>) are for
-        demo purposes only and do not actually trigger any actions.
-      </small>
-    </p>
-  </div>
-
-  <section class="row mb-2">
-    <div class="mb-1">
-      <button class="btn btn-outline-secondary btn-sm btn-icon" data-test="clear-grouping-btn" @click="clearGrouping()">
-        <span>Clear grouping</span>
-      </button>
-      <button class="btn btn-outline-secondary btn-sm btn-icon" data-test="collapse-all-btn" @click="collapseAllGroups()">
-        <span class="mdi mdi-arrow-collapse"></span>
-        <span>Collapse all groups</span>
-      </button>
-      <button class="btn btn-outline-secondary btn-sm btn-icon" data-test="expand-all-btn" @click="expandAllGroups()">
-        <span class="mdi mdi-arrow-expand"></span>
-        <span>Expand all groups</span>
-      </button>
-      <button class="btn btn-outline-secondary btn-sm btn-icon" data-test="group-duration-sort-value-btn" @click="groupByDuration()">
-        Group by Duration
-      </button>
+    <div class="subtitle alert alert-light">
+      <h5 class="mb-2">
+        <span class="mdi mdi-information-outline"></span>
+        <strong>Menu Slots Demo with Custom Renderer</strong>
+      </h5>
+      <p class="mb-2">
+        Click on the menu buttons to see the new <strong>single slot functionality</strong> working across all menu types (Header Menu, Cell
+        Menu, Context Menu, Grid Menu):
+      </p>
+      <p class="mt-2">
+        <small
+          ><strong>Note:</strong> The demo focuses on the custom rendering capability via <code>slotRenderer</code> and
+          <code>defaultMenuItemRenderer</code>, which work across all menu plugins (SlickHeaderMenu, SlickCellMenu, SlickContextMenu,
+          SlickGridMenu). Also note that the keyboard shortcuts displayed in the menus (e.g., <code>Alt+↑</code>, <code>F5</code>) are for
+          demo purposes only and do not actually trigger any actions.
+        </small>
+      </p>
     </div>
-  </section>
 
-  <slickgrid-vue
-    v-model:options="gridOptions"
-    v-model:columns="columnDefinitions"
-    v-model:dataset="dataset"
-    grid-id="grid51"
-    @onVueGridCreated="vueGridReady($event.detail)"
-  >
-  </slickgrid-vue>
+    <section class="row mb-2">
+      <div class="mb-1">
+        <button class="btn btn-outline-secondary btn-sm btn-icon" data-test="clear-grouping-btn" @click="clearGrouping()">
+          <span>Clear grouping</span>
+        </button>
+        <button class="btn btn-outline-secondary btn-sm btn-icon" data-test="collapse-all-btn" @click="collapseAllGroups()">
+          <span class="mdi mdi-arrow-collapse"></span>
+          <span>Collapse all groups</span>
+        </button>
+        <button class="btn btn-outline-secondary btn-sm btn-icon" data-test="expand-all-btn" @click="expandAllGroups()">
+          <span class="mdi mdi-arrow-expand"></span>
+          <span>Expand all groups</span>
+        </button>
+        <button class="btn btn-outline-secondary btn-sm btn-icon" data-test="group-duration-sort-value-btn" @click="groupByDuration()">
+          Group by Duration
+        </button>
+      </div>
+    </section>
+
+    <slickgrid-vue
+      v-model:options="gridOptions"
+      v-model:columns="columnDefinitions"
+      v-model:dataset="dataset"
+      grid-id="grid51"
+      @onVueGridCreated="vueGridReady($event.detail)"
+    >
+    </slickgrid-vue>
+  </div>
 </template>
 <style lang="scss">
-body {
+.grid51-container {
   --slick-menu-item-height: 30px;
   --slick-menu-line-height: 30px;
   --slick-column-picker-item-height: 28px;
@@ -696,6 +773,26 @@ body {
   .slick-menu-footer {
     padding: 4px 6px;
     border-top: 1px solid #c0c0c0;
+  }
+}
+
+body {
+  .slick-menu-item.slot-menu-container {
+    --slick-menu-item-height: 40px;
+    --slick-menu-item-hover-border: 1px solid transparent;
+    --slick-menu-item-hover-color: transparent !important;
+
+    .footer-buttons-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      gap: 10px;
+    }
+
+    .footer-btn {
+      flex: 1;
+      justify-content: center;
+    }
   }
 }
 
