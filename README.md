@@ -5,6 +5,11 @@
 ### Installation
 Git clone the demo and npm install it, then run and enjoy fully working demo.
 
+| Stackblitz | Description |
+| ---------- | ----------- |
+| [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/ghiscoding/slickgrid-vue-demos) | with I18N Translate |
+| [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/ghiscoding/slickgrid-vue-demos/tree/main/single-locale-without-i18n) | Single Locale (_without i18n_) |
+
 ### Bootstrap 5 - with `i18n` Translate
 
 Common Bootstrap 5 demo using `i18n` to provide the use of multiple languages (locales) which can be switched dynamically (on the fly).
