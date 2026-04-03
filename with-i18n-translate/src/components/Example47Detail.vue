@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { format } from '@formkit/tempo';
 import type { RowDetailViewProps } from 'slickgrid-vue';
 import { showToast } from './utilities.js';
-import { format } from '@formkit/tempo';
 
 interface Item {
   id: number;
